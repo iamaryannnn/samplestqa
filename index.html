@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AmbusWay Connect</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0; padding: 0; height: 100%;
+      font-family: 'Arial', sans-serif; background-color: #f4f4f4;
+    }
+
+    .page {
+      display: none; height: 100vh;
+      display: flex; justify-content: center; align-items: center; padding: 20px;
+    }
+
+    .page-content {
+      width: 100%; max-width: 400px; background-color: #fff;
+      padding: 30px; border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 { text-align: center; color: #333; margin-bottom: 20px; }
+
+    select, input, button {
+      display: block; width: 100%; margin: 10px 0; padding: 12px;
+      font-size: 16px; border-radius: 5px; border: 1px solid #ccc;
+    }
+
+    button {
+      border: none; background-color: #d9534f; color: white; cursor: pointer;
+    }
+
+    button:hover { opacity: 0.95; }
+
+    .google-button { background-color: #4285F4; }
+
+    .services-container {
+      display: flex; flex-direction: column; gap: 20px;
+    }
+
+    .nearby-hospitals, .recent-activity {
+      width: 100%;
+    }
+
+    #map {
+      width: 100%; height: 250px; background-color: #ddd;
+      margin-bottom: 20px; border-radius: 8px; overflow: hidden;
+    }
+
+    .ambulance-details img {
+      display: block; width: 80px; height: 80px;
+      object-fit: cover; border-radius: 50%; margin: 0 auto 10px auto;
+    }
+
+    .ambulance-details p {
+      text-align: center; margin: 5px 0;
+    }
+
+    .status button { background-color: #5cb85c; }
+
+    @media (min-width: 768px) {
+      .services-container {
+        flex-direction: row; justify-content: space-between;
+      }
+
+      .nearby-hospitals, .recent-activity {
+        width: 48%;
+      }
+    }
+
+    .link-button {
+      background: none;
+      border: none;
+      color: #4285F4;
+      cursor: pointer;
+      text-align: left;
+      margin: 5px 0;
+      padding: 0;
+    }
+  </style>
+</head>
+<body>
+  <!-- Login Page -->
+  <div id="login-page" class="page">
+    <div class="page-content">
+      <h1>AmbusWay Connect</h1>
+      <div class="login-options">
+        <select id="user-type-login">
+          <option value="user">User</option>
+          <option value="driver">Ambulance Driver</option>
+        </select>
+      </div>
+      <form id="login-form">
+        <input type="email" placeholder="Email" required />
+        <input type="password" placeholder="Password" required />
+        <button type="submit">Sign In</button>
+      </form>
+      <button class="link-button" onclick="navigateTo('reset-page')">Forgot Password?</button>
+      <button class="nav-button" onclick="navigateTo('signup-page')">Sign Up</button>
+    </div>
+  </div>
+
+  <!-- Reset Password Page -->
+  <div id="reset-page" class="page">
+    <div class="page-content">
+      <h1>Reset Password</h1>
+      <form id="reset-form">
+        <input type="email" placeholder="Enter your email" required />
+        <button type="submit">Send Reset Link</button>
+      </form>
+      <p id="reset-msg" style="color: green; text-align: center;"></p>
+      <button class="nav-button" onclick="navigateTo('login-page')">Back to Login</button>
+    </div>
+  </div>
+
+  <!-- Sign Up Page -->
+  <div id="signup-page" class="page">
+    <div class="page-content">
+      <h1>Sign Up</h1>
+      <div class="signup-options">
+        <select id="user-type-signup">
+          <option value="user">User</option>
+          <option value="driver">Ambulance Driver</option>
+        </select>
+      </div>
+      <form id="signup-form">
+        <input type="text" placeholder="Full Name" required />
+        <input type="email" placeholder="Email" required />
+        <input type="password" placeholder="Password" required />
+        <button type="submit">Sign Up</button>
+      </form>
+      <button class="google-button">Sign Up with Google</button>
+      <button class="nav-button" onclick="navigateTo('login-page')">Back to Login</button>
+    </div>
+  </div>
+
+  <!-- Emergency Services Page -->
+  <div id="emergency-services" class="page">
+    <div class="page-content">
+      <h1>Emergency Services</h1>
+      <button id="request-ambulance">Request Ambulance Now</button>
+      <div class="services-container">
+        <div class="nearby-hospitals">
+          <h2>Nearby Hospitals</h2>
+          <select>
+            <option>City Hospital</option>
+            <option>General Hospital</option>
+            <option>Medical Center</option>
+          </select>
+        </div>
+        <div class="recent-activity">
+          <h2>Recent Activity</h2>
+          <p>No recent activities</p>
+        </div>
+      </div>
+      <button class="nav-button" onclick="navigateTo('login-page')">Back to Login</button>
+    </div>
+  </div>
+
+  <!-- Ambulance Tracking Page -->
+  <div id="ambulance-tracking" class="page">
+    <div class="page-content">
+      <h1>Ambulance Tracking</h1>
+      <div id="map">
+        <img src="path/to/map-image.jpg" alt="Map" style="width: 100%; height: 100%; object-fit: cover;" />
+      </div>
+      <div class="ambulance-details">
+        <img src="john doe.jpeg" alt="Akash Raghuvanshi" />
+        <p><strong>Driver: Akash Raghuvanshi</strong></p>
+        <p>Contact: 123-456-7890</p>
+        <p>ETA: 15 minutes</p>
+        <button>Call Driver</button>
+        <button>Cancel Request</button>
+      </div>
+      <button class="nav-button" onclick="navigateTo('login-page')">Back to Login</button>
+    </div>
+  </div>
+
+  <!-- Driver Dashboard -->
+  <div id="driver-dashboard" class="page">
+    <div class="page-content">
+      <h1>Driver Dashboard</h1>
+      <div class="status">
+        <button id="go-online">Go Online</button>
+      </div>
+      <div class="requests">
+        <h2>Recent Requests</h2>
+        <p>No active requests</p>
+      </div>
+      <div class="statistics">
+        <h2>Today's Statistics</h2>
+        <p>Total Trips: 0</p>
+        <p>Hours Online: 0</p>
+      </div>
+      <button class="nav-button" onclick="navigateTo('login-page')">Back to Login</button>
+    </div>
+  </div>
+
+  <script>
+    let inactivityTimer;
+
+    function resetInactivityTimer() {
+      clearTimeout(inactivityTimer);
+      inactivityTimer = setTimeout(() => {
+        alert("Session expired due to inactivity.");
+        navigateTo("login-page");
+      }, 300000); // 5 minutes
+    }
+
+    ['click', 'mousemove', 'keydown'].forEach(evt => {
+      document.addEventListener(evt, resetInactivityTimer);
+    });
+
+    resetInactivityTimer(); // initial call
+
+    document.getElementById("login-form").addEventListener("submit", function (event) {
+      event.preventDefault();
+      const userType = document.getElementById("user-type-login").value;
+      if (userType === "user") navigateTo("emergency-services");
+      else if (userType === "driver") navigateTo("driver-dashboard");
+    });
+
+    document.getElementById("signup-form").addEventListener("submit", function (event) {
+      event.preventDefault();
+      const userType = document.getElementById("user-type-signup").value;
+      if (userType === "user") navigateTo("emergency-services");
+      else if (userType === "driver") navigateTo("driver-dashboard");
+    });
+
+    document.getElementById("reset-form").addEventListener("submit", function (event) {
+      event.preventDefault();
+      const email = event.target.querySelector("input").value;
+      document.getElementById("reset-msg").textContent = `Reset link sent to ${email}`;
+    });
+
+    document.getElementById("request-ambulance").addEventListener("click", function () {
+      navigateTo("ambulance-tracking");
+    });
+
+    document.getElementById("go-online").addEventListener("click", function () {
+      const button = this;
+      if (button.textContent === "Go Online") {
+        button.textContent = "Go Offline";
+        button.style.backgroundColor = "#d9534f";
+        alert("You are now online.");
+      } else {
+        button.textContent = "Go Online";
+        button.style.backgroundColor = "#5cb85c";
+        alert("You are now offline.");
+      }
+    });
+
+    function navigateTo(pageId) {
+      document.querySelectorAll(".page").forEach((page) => {
+        page.style.display = "none";
+      });
+      document.getElementById(pageId).style.display = "flex";
+      history.pushState({ page: pageId }, "", `#${pageId}`);
+      resetInactivityTimer();
+    }
+
+    window.addEventListener("popstate", function (event) {
+      if (event.state && event.state.page) {
+        navigateTo(event.state.page);
+      }
+    });
+
+    window.addEventListener("load", function () {
+      const pageId = location.hash.replace("#", "") || "login-page";
+      navigateTo(pageId);
+    });
+  </script>
+</body>
+</html>
